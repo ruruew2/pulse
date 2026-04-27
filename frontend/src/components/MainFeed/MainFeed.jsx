@@ -8,38 +8,34 @@ const MainFeed = () => {
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // GNews API 키 (직접 가입해서 받은 키를 넣으세요!)
-  const API_KEY = "YOUR_GNEWS_API_KEY"; 
+  const techArticles = articles.filter(a => a.category === 'IT / TECH');
+  const designArticles = articles.filter(a => a.category === 'DESIGN');
+  const trendArticles = articles.filter(a => a.category === 'TREND');
 
 useEffect(() => {
-  const fetchRSS = async () => {
+  const fetchArticles = async () => {
     try {
-      const RSS_URL = "https://techcrunch.com/feed/";
-      const API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`;
-
-      const response = await fetch(API_URL);
+      const response = await fetch('http://localhost:8000/articles');
       const data = await response.json();
 
-      if (data.items) {
-        // (item, index)로 index를 정의해줘야 에러가 안 나요!
-        const formattedArticles = data.items.slice(0, 6).map((item, index) => ({
-          title: item.title,
-          // 기사마다 다른 테크 이미지를 랜덤으로 가져옵니다
-          image: item.thumbnail || item.enclosure?.link || `https://picsum.photos/seed/${index + 123}/800/600`,
-          publishedAt: item.pubDate,
-          url: item.link
-        }));
-        setArticles(formattedArticles);
-      }
+      const formattedArticles = data.map((item, index) => ({
+        title: item.title,
+        image: item.image || `https://picsum.photos/seed/${index + 123}/800/600`,
+        publishedAt: item.published_at,
+        url: item.url,
+        summary: item.summary,
+        category: item.category,
+        id: item.id
+      }));
+      setArticles(formattedArticles);
     } catch (e) {
-      console.error("RSS 로드 실패", e);
+      console.error("기사 로드 실패", e);
     } finally {
       setLoading(false);
     }
   };
 
-  fetchRSS();
+  fetchArticles();
 }, []);
 
 
@@ -119,49 +115,66 @@ useEffect(() => {
       </section>
 
       {/* Category Section */}
-      <section className="category-feature-grid">
-        {categories.map((cat) => (
-          <div className="feature-item" key={cat.label}>
-            <div className="cat-symbol">{cat.symbol}</div>
-            <h3>{cat.label}</h3>
-            <p>{cat.desc}</p>
-          </div>
-        ))}
-      </section>
-
-      {/* Article List Section */}
-      <section className="content-archive">
-        <div className="archive-section">
-          <div className="archive-header">
-            <span className="arc-id">01</span>
-            <h2 className="arc-title">LATEST TECH PULSE</h2>
-          </div>
-
-<div className="article-grid">
-  {loading ? (
-    <p>뉴스를 불러오는 중입니다...</p>
-  ) : (
-    articles?.map((article, index) => (
-      <div 
-        key={index} 
-        className="article-card" 
-        // 여기를 window.open에서 navigate로 교체!
-        onClick={() => navigate(`/article/${index}`, { state: { data: article } })}
-      >
-        <div className="article-img">
-          <img src={article.image} alt={article.title} />
-        </div>
+{/* 1. IT / TECH 섹션 */}
+<section className="content-archive">
+  <div className="archive-header">
+    <span className="arc-id">01</span>
+    <h2 className="arc-title">LATEST TECH PULSE</h2>
+  </div>
+  <div className="article-grid">
+    {techArticles.map((article, index) => (
+      <div key={index} className="article-card" onClick={() => navigate(`/article/${article.id}`, { state: { data: article } })}>
+        <div className="article-img"><img src={article.image} alt="" /></div>
         <div className="article-body">
-          <span className="date">{article.publishedAt?.split('T')[0]}</span>
+          <span className="date">{article.publishedAt?.split(' ')[0]}</span>
           <h3>{article.title}</h3>
         </div>
       </div>
-    ))
-  )}
-</div>
-        </div>
-      </section>
+    ))}
+  </div>
+</section>
 
+{/* 2. DESIGN 섹션 (여기는 지그재그나 다른 스타일로 줘도 예뻐요!) */}
+<section className="content-archive design-section">
+  <div className="archive-header">
+    <span className="arc-id">02</span>
+    <h2 className="arc-title">DESIGN INSPIRATION</h2>
+  </div>
+  <div className="article-grid">
+    {designArticles.length > 0 ? (
+      designArticles.map((article, index) => (
+        <div key={index} className="article-card" onClick={() => navigate(`/article/${article.id}`, { state: { data: article } })}>
+          <div className="article-img"><img src={article.image} alt="" /></div>
+          <div className="article-body"><h3>{article.title}</h3></div>
+        </div>
+      ))
+    ) : (
+      <p className="no-data">디자인 기사를 수집 중입니다...</p>
+    )}
+  </div>
+</section>
+
+{/* 3. TREND 섹션 */}
+<section className="content-archive">
+  <div className="archive-header">
+    <span className="arc-id">03</span>
+    <h2 className="arc-title">CULTURAL TRENDS</h2>
+  </div>
+  <div className="article-grid">
+    {trendArticles.length > 0 ? (
+      trendArticles.map((article, index) => (
+        <div key={index} className="article-card" onClick={() => navigate(`/article/${article.id}`, { state: { data: article } })}>
+          <div className="article-img"><img src={article.image} alt="" /></div>
+          <div className="article-body">
+            <h3>{article.title}</h3>
+          </div>
+        </div>
+      ))
+    ) : (
+      <p className="no-data">트렌드 소식을 불러오지 못했습니다 ㅠ_ㅠ</p>
+    )}
+  </div>
+</section>
 
 
 

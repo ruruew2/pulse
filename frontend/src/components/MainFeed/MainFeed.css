@@ -128,6 +128,8 @@
   padding: 0 40px; 
   width: 100%;
   box-sizing: border-box;
+  margin-top: 100px;    /* 위 섹션과의 간격 */
+  margin-bottom: 100px; /* 아래 섹션과의 간격 */
 }
 
 .archive-section {

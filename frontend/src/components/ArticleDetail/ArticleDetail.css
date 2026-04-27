@@ -68,11 +68,11 @@
 }
 
 .detail-title {
-  font-size: clamp(2.5rem, 6vw, 5rem); /* 제목은 무식할 정도로 커야 힙해요 */
+  font-size: clamp(40px, 8vw, 80px); /* 반응형 크기 유지 */
+  line-height: 1.1; /* 줄 간격을 살짝 좁혀서 겹침 방지 (기본은 보통 1.2 이상) */
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  word-break: keep-all;
+  margin-bottom: 30px; /* 아래쪽 에디토리얼 정보와의 간격 */
+  word-break: keep-all; /* 단어가 잘리지 않게 설정 */
 }
 
 .detail-hero-img {
@@ -126,4 +126,22 @@
   line-height: 1.9;
   margin-bottom: 30px;
   color: #444;
+}
+
+.read-more-btn {
+  display: block;
+  margin-top: 60px;
+  padding: 20px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 2px;
+  transition: 0.3s;
+}
+
+.read-more-btn:hover {
+  background: #333;
+  transform: translateY(-3px);
 }
