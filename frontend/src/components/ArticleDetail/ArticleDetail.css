@@ -1,0 +1,129 @@
+/* 상세페이지 전체 컨테이너 */
+.detail-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  color: #1a1a1a;
+  padding-bottom: 150px;
+}
+
+/* 상단 뒤로가기 & 메타 섹션 */
+.detail-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  font-family: 'Pixel', sans-serif; /* 미현님의 픽셀 폰트 활용! */
+  font-size: 0.9rem;
+}
+
+.back-btn {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  
+  /* [필수] 화면에 고정시키고 위치 잡기 */
+  position: fixed; 
+  top: 40px; 
+  left: 15px;
+  z-index: 9999; /* 다른 요소에 가려지지 않게 맨 위로 올림 */
+
+  gap: 8px;
+  font-family: 'Pixel', sans-serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 10px 20px; /* 고정형일 땐 여백이 조금 있는 게 예뻐요 */
+  
+  background: rgba(255, 255, 255, 0.7); 
+  backdrop-filter: blur(5px);
+  border-radius: 30px;
+}
+
+.back-btn:hover {
+  gap: 15px;
+  color: #000;
+  background: rgba(255, 255, 255, 1); /* 호버 시 더 선명하게 */
+  border-bottom: 1px solid #5a5a5a;
+}
+
+/* 화살표 아이콘 */
+.back-btn::before {
+  content: ' '; 
+  font-size: 18px;
+}
+
+/* 제목 섹션 - 여기가 제일 중요! */
+.detail-header {
+  padding: 0 10vw;
+  margin-top: 50px;
+  margin-bottom: 80px;
+}
+
+.detail-category {
+  font-family: 'Pixel', sans-serif;
+  color: #555;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.detail-title {
+  font-size: clamp(2.5rem, 6vw, 5rem); /* 제목은 무식할 정도로 커야 힙해요 */
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  word-break: keep-all;
+}
+
+.detail-hero-img {
+  width: 80%;       /* 양옆에 10%씩 여백 */
+  aspect-ratio: 16 / 9; /* 가로로 긴 세련된 비율 */
+  margin: 0 auto 80px;
+  overflow: hidden;
+}
+
+.detail-hero-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 살짝 흑백 느낌을 주고 싶다면 아래 주석 해제 */
+  /* filter: grayscale(20%); */
+}
+
+/* 본문 섹션 - 가로폭을 확 좁히세요 */
+.detail-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* AI 요약 블록 - 에디토리얼의 핵심 */
+.ai-summary {
+  background-color: #f9f9f9;
+  padding: 40px;
+  border-left: 5px solid #000;
+  margin-bottom: 60px;
+}
+
+.summary-label {
+  display: block;
+  font-family: 'Pixel';
+  font-size: 0.7rem;
+  margin-bottom: 15px;
+  color: #888;
+}
+
+.ai-summary p {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 일반 본문 텍스트 */
+.full-text p {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  margin-bottom: 30px;
+  color: #444;
+}
