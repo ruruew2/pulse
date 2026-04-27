@@ -1,0 +1,14 @@
+# 비밀 키 파일 (절대 올리면 안 됨)
+.env
+backend/.env
+
+# 파이썬 찌꺼기들
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+
+# 기타 잡동사니
+.vscode/
+.DS_Store
