@@ -471,3 +471,107 @@ html, body {
   margin-bottom: 50px;
   color: #000;
 }
+
+.header-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.header-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
+
+/* 상단 네비게이션 */
+.main-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 4rem;
+  box-sizing: border-box;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  cursor: pointer;
+}
+
+.nav-auth {
+  display: flex;
+  align-items: center;
+}
+
+.auth-nav-btn {
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd; /* 기본 테두리 */
+  background: white;
+  color: #333;
+}
+
+
+.auth-nav-btn.mypage:hover {
+  background: #f0f0f0;
+  border-color: #1a1a1a;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 버튼 사이의 간격 */
+}
+
+.auth-nav-btn.login:hover {
+  background: transparent;
+  color: #1a1a1a;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-email {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.logout {
+  background: transparent;
+  color: #1a1a1a;
+  border: 1px solid #ddd;
+}
+
+.logout:hover {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+/* 네비게이션 공간 확보를 위해 Hero 수정 */
+.hero-section {
+  padding-top: 120px; /* 헤더 높이만큼 띄워주기 */
+}

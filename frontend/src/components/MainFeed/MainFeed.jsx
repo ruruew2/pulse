@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RiTerminalBoxLine, RiQuillPenLine, RiPulseLine } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
+import { supabase } from "../../supabaseClient";
 import './MainFeed.css';
 
 const MainFeed = () => {
@@ -11,6 +12,31 @@ const MainFeed = () => {
   const techArticles = articles.filter(a => a.category === 'IT / TECH');
   const designArticles = articles.filter(a => a.category === 'DESIGN');
   const trendArticles = articles.filter(a => a.category === 'TREND');
+  const [user, setUser] = useState(null);
+
+
+
+  // 1. 로그인 상태 확인
+  useEffect(() => {
+    // 현재 세션 확인
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // 상태 변화 감지
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // 로그아웃 함수
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    alert('로그아웃 되었습니다.');
+  };
+
 
 useEffect(() => {
   const fetchArticles = async () => {
@@ -89,6 +115,26 @@ useEffect(() => {
 
   return (
     <div className="jandi-style-container">
+      <nav className="main-nav">
+      <div className="nav-logo" onClick={() => navigate('/')}>PULSE</div>
+      <div className="nav-auth">
+        {user ? (
+          <div className="user-info">
+            <span className="user-email">{user.email.split('@')[0]}님</span>
+            <button onClick={() => navigate('/mypage')} className="auth-nav-btn mypage">
+                마이페이지
+              </button>
+            <button onClick={handleLogout} className="auth-nav-btn logout">로그아웃</button>
+          </div>
+        ) : (
+          <button onClick={() => navigate('/auth')} className="auth-nav-btn login">
+            로그인 / 회원가입
+          </button>
+        )}
+      </div>
+      </nav>
+
+
       {/* Hero Section */}
       <section className="hero-section">
         <motion.div
@@ -108,11 +154,27 @@ useEffect(() => {
           </p>
           <div className="subscription-box">
             <input type="email" placeholder="이메일 주소를 입력하세요" className="sub-input" />
-            <button className="sub-btn">무료로 구독하기</button>
+            <button 
+              className="sub-btn"
+              onClick={() => user ? null : navigate('/auth')}
+            >
+              {user ? '구독 중 ✓' : '무료로 구독하기'}
+            </button>
           </div>
 
         </motion.div>
       </section>
+
+      {/* Category Section */}
+        <section className="category-feature-grid">
+          {categories.map((cat) => (
+            <div className="feature-item" key={cat.label}>
+              <div className="cat-symbol">{cat.symbol}</div>
+              <h3>{cat.label}</h3>
+              <p>{cat.desc}</p>
+            </div>
+          ))}
+        </section>
 
       {/* Category Section */}
 {/* 1. IT / TECH 섹션 */}
