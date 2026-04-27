@@ -9,11 +9,13 @@ const MainFeed = () => {
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const techArticles = articles.filter(a => a.category === 'IT / TECH');
-  const designArticles = articles.filter(a => a.category === 'DESIGN');
-  const trendArticles = articles.filter(a => a.category === 'TREND');
   const [user, setUser] = useState(null);
 
+  // 마이페이지 로컬스트리지에서 기사 노출 카테고리 설정에서 선택 가능하게
+  const savedCats = JSON.parse(localStorage.getItem('pulse_categories') || '["IT / TECH","DESIGN","TREND"]');
+  const techArticles = savedCats.includes('IT / TECH') ? articles.filter(a => a.category === 'IT / TECH') : [];
+  const designArticles = savedCats.includes('DESIGN') ? articles.filter(a => a.category === 'DESIGN') : [];
+  const trendArticles = savedCats.includes('TREND') ? articles.filter(a => a.category === 'TREND') : [];
 
 
   // 1. 로그인 상태 확인
@@ -177,22 +179,28 @@ useEffect(() => {
         </section>
 
       {/* Category Section */}
+      
+{/* 1. IT / TECH 섹션 */}
 {/* 1. IT / TECH 섹션 */}
 <section className="content-archive">
   <div className="archive-header">
     <span className="arc-id">01</span>
-    <h2 className="arc-title">LATEST TECH PULSE</h2>
+    <h2 className="arc-title">LATEST TECH</h2>
   </div>
   <div className="article-grid">
-    {techArticles.map((article, index) => (
-      <div key={index} className="article-card" onClick={() => navigate(`/article/${article.id}`, { state: { data: article } })}>
-        <div className="article-img"><img src={article.image} alt="" /></div>
-        <div className="article-body">
-          <span className="date">{article.publishedAt?.split(' ')[0]}</span>
-          <h3>{article.title}</h3>
+    {techArticles.length > 0 ? (
+      techArticles.map((article, index) => (
+        <div key={index} className="article-card" onClick={() => navigate(`/article/${article.id}`, { state: { data: article } })}>
+          <div className="article-img"><img src={article.image} alt="" /></div>
+          <div className="article-body">
+            <span className="date">{article.publishedAt?.split(' ')[0]}</span>
+            <h3>{article.title}</h3>
+          </div>
         </div>
-      </div>
-    ))}
+      ))
+    ) : (
+      <p className="no-data">테크 소식을 확인하고 싶으시다면 설정에서 선택해주세요!</p>
+    )}
   </div>
 </section>
 
@@ -211,7 +219,7 @@ useEffect(() => {
         </div>
       ))
     ) : (
-      <p className="no-data">디자인 기사를 수집 중입니다...</p>
+      <p className="no-data">디자인 소식을 확인하고 싶으시다면 설정에서 선택해주세요!</p>
     )}
   </div>
 </section>
@@ -233,7 +241,7 @@ useEffect(() => {
         </div>
       ))
     ) : (
-      <p className="no-data">트렌드 소식을 불러오지 못했습니다 ㅠ_ㅠ</p>
+      <p className="no-data">트렌드 소식을 확인하고 싶으시다면 설정에서 선택해주세요!</p>
     )}
   </div>
 </section>

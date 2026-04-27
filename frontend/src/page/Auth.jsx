@@ -11,6 +11,11 @@ const Auth = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const handleKeyDown = (e) => {
+  if (e.key === 'Enter') handleSubmit();
+  };
+
+
   const handleSubmit = async () => {
     setLoading(true);
     setError('');
@@ -58,6 +63,7 @@ const Auth = () => {
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={handleKeyDown}
           className="auth-input"
         />
         <input
@@ -65,6 +71,7 @@ const Auth = () => {
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
           className="auth-input"
         />
 
@@ -73,10 +80,12 @@ const Auth = () => {
         <button 
           className="auth-btn" 
           onClick={handleSubmit}
+          
           disabled={loading}
         >
           {loading ? '처리 중...' : isLogin ? '로그인' : '회원가입'}
         </button>
+
       </div>
     </div>
   );

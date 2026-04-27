@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from "../supabaseClient";
 import './MyPage.css';
 
@@ -9,6 +10,13 @@ const MyPage = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [likes, setLikes] = useState([]);
   const [tab, setTab] = useState('bookmark');
+  const [showSettings, setShowSettings] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [pwMsg, setPwMsg] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState(() => {
+    const saved = localStorage.getItem('pulse_categories');
+    return saved ? JSON.parse(saved) : ['IT / TECH', 'DESIGN', 'TREND'];
+  });
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -40,11 +48,87 @@ const MyPage = () => {
     navigate('/');
   };
 
+  const handlePasswordChange = async () => {
+    if (!newPassword || newPassword.length < 6) {
+      setPwMsg('비밀번호는 6자 이상이어야 합니다.');
+      return;
+    }
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) setPwMsg('변경 실패: ' + error.message);
+    else {
+      setPwMsg('비밀번호가 변경되었습니다!');
+      setNewPassword('');
+    }
+  };
+
+  const toggleCategory = (cat) => {
+    const updated = selectedCategories.includes(cat)
+      ? selectedCategories.filter(c => c !== cat)
+      : [...selectedCategories, cat];
+    setSelectedCategories(updated);
+    localStorage.setItem('pulse_categories', JSON.stringify(updated));
+  };
+
   const currentList = tab === 'bookmark' ? bookmarks : likes;
 
   return (
     <div className="mypage-container">
       <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
+
+      <button className="settings-btn" onClick={() => setShowSettings(!showSettings)}>⚙</button>
+
+      <AnimatePresence>
+        {showSettings && (
+          <motion.div
+            className="settings-panel"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            <div className="settings-panel-header">
+              <h3>설정</h3>
+              <button className="settings-close-btn" onClick={() => setShowSettings(false)}>✕</button>
+            </div>
+
+            <div className="settings-item">
+              <label>새 비밀번호를 입력해주세요!</label>
+              <input
+                type="password"
+                placeholder="new password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="settings-input"
+              />
+              <button className="settings-save-btn" onClick={handlePasswordChange}>
+                변경하기
+              </button>
+              {pwMsg && <p className="pw-msg">{pwMsg}</p>}
+            </div>
+
+            <div className="settings-item">
+              <label>관심 카테고리</label>
+              {['IT / TECH', 'DESIGN', 'TREND'].map(cat => (
+                <div key={cat} className="category-check">
+                  <input
+                    type="checkbox"
+                    id={cat}
+                    checked={selectedCategories.includes(cat)}
+                    onChange={() => toggleCategory(cat)}
+                  />
+                  <label htmlFor={cat}>{cat}</label>
+                </div>
+              ))}
+            </div>
+
+            <div className="settings-item">
+              <button className="settings-logout-btn" onClick={handleLogout}>
+                로그아웃
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <header className="mypage-header">
         <h1 className="mypage-title">MY PAGE</h1>
@@ -55,14 +139,14 @@ const MyPage = () => {
       </header>
 
       <div className="mypage-tabs">
-        <button 
-          className={tab === 'bookmark' ? 'tab active' : 'tab'} 
+        <button
+          className={tab === 'bookmark' ? 'tab active' : 'tab'}
           onClick={() => setTab('bookmark')}
         >
           ★ 북마크 {bookmarks.length}
         </button>
-        <button 
-          className={tab === 'like' ? 'tab active' : 'tab'} 
+        <button
+          className={tab === 'like' ? 'tab active' : 'tab'}
           onClick={() => setTab('like')}
         >
           ♥ 좋아요 {likes.length}
@@ -74,8 +158,8 @@ const MyPage = () => {
           <p className="empty-msg">아직 {tab === 'bookmark' ? '북마크한' : '좋아요한'} 기사가 없습니다.</p>
         ) : (
           currentList.map((article, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className="mypage-card"
               onClick={() => navigate(`/article/${article.id}`, { state: { data: article } })}
             >

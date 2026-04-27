@@ -183,3 +183,237 @@
   color: #bbb;
   font-size: 1.1rem;
 }
+
+
+
+/* 설정 버튼: 우측 상단에 엣지 있게 배치 */
+.settings-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background: #ffffff;
+  border: 1px solid #000000;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 1001;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.settings-btn:hover {
+  transform: rotate(90deg); /* 톱니바퀴 돌아가는 느낌 */
+  border-color: #1a1a1a;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* 설정 패널: 우측에서 스르륵 나타나는 느낌 */
+.settings-panel {
+  position: fixed;
+  top: 100px;
+  right: 40px;
+  background: #fff;
+  border: 1px solid #1a1a1a; /* 강렬한 블랙 라인 */
+  padding: 35px;
+  width: 300px;
+  z-index: 1000;
+  box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.05); /* 힙한 오프셋 그림자 */
+  animation: panelFadeIn 0.4s ease-out;
+}
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.settings-panel h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.settings-item {
+  margin-bottom: 25px;
+}
+
+.settings-item label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #3f3e3e;
+  margin-bottom: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+}
+
+/* 입력창: 미니멀한 라인 스타일 */
+.settings-input {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 0.9rem;
+  font-family: 'Pretendard', sans-serif;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.settings-input:focus {
+  border-bottom-color: #1a1a1a;
+}
+
+/* 저장 버튼: 강렬한 임팩트 */
+.settings-save-btn {
+  width: 100%;
+  padding: 15px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s;
+}
+
+.settings-save-btn:hover {
+  background: #000;
+  letter-spacing: 2px; /* 살짝 넓어지는 효과 */
+}
+
+/* 로그아웃: 조심스러운 느낌 */
+.settings-logout-btn {
+  width: 100%;
+  padding: 12px;
+  background: none;
+  border: 1px solid #ff1d1d;
+  margin-top: 15px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: #ff0a0a;
+  transition: all 0.3s;
+}
+
+.settings-logout-btn:hover {
+  border-color: #1a1a1a;
+  color: #1a1a1a;
+}
+
+/* 성공 메시지: 세련된 블루 */
+.pw-msg {
+  font-size: 0.75rem;
+  color: #2563eb;
+  margin-top: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.settings-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.settings-close-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.3s;
+  margin-bottom: 40px;
+}
+
+.settings-close-btn:hover {
+  color: #1a1a1a;
+}
+
+
+
+/* 카테고리 아이템 전체 컨테이너 */
+.category-check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 라벨과 체크박스를 양끝으로 */
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f5f5;
+  transition: all 0.2s ease;
+}
+
+.category-check:last-child {
+  border-bottom: none;
+  margin-bottom: 20px;
+}
+
+/* 라벨 스타일: JetBrains Mono의 엣지 살리기 */
+.category-check label {
+  cursor: pointer;
+  color: #1a1a1a;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* 실제 체크박스는 숨기고 커스텀 디자인 적용 */
+.category-check input[type="checkbox"] {
+  appearance: none; /* 기본 디자인 제거 */
+  -webkit-appearance: none;
+  width: 34px;
+  height: 18px;
+  background: #eee;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 체크박스 안의 동그란 스위치 */
+.category-check input[type="checkbox"]::before {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 체크되었을 때 (Active) */
+.category-check input[type="checkbox"]:checked {
+  background: #1a1a1a; /* PULSE 메인 컬러 */
+}
+
+.category-check input[type="checkbox"]:checked::before {
+  left: 18px; /* 동그라미 이동 */
+}
+
+/* 마우스 올렸을 때 살짝 강조 */
+.category-check:hover label {
+  color: #000;
+  transform: translateX(3px);
+  transition: 0.3s;
+}
+
+
+.settings-item:nth-child(2) {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #808080;
+}
