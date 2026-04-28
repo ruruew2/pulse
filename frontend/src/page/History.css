@@ -1,0 +1,64 @@
+.history-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-card-actions {
+  display: flex;
+  gap: 15px;
+  padding: 0 10px;
+}
+
+.edit-btn, .delete-btn {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-family: 'Pretendard';
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.edit-btn:hover { background: #eee; }
+.delete-btn { color: #ff4d4f; }
+.delete-btn:hover { background: #fff1f0; border-color: #ff4d4f; }
+
+
+.history-card-footer {
+  display: flex;
+  justify-content: space-between; /* VIEW POST는 왼쪽, 뱃지는 오른쪽 */
+  align-items: center;
+  margin-top: auto; /* 내용이 적어도 항상 맨 아래 붙게 함 */
+  padding-top: 15px;
+}
+
+.history-card-footer {
+  display: flex;
+  justify-content: space-between; /* 왼쪽 끝에 VIEW POST, 오른쪽 끝에 뱃지 */
+  align-items: center;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid #f9f9f9;
+}
+
+.status-badge {
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.status-badge.sent {
+  background-color: #e6fffa;
+  color: #38b2ac;
+  border: 1px solid #b2f5ea;
+}
+
+.status-badge.draft {
+  background-color: #fff5f5;
+  color: #e53e3e;
+  border: 1px solid #feb2b2;
+}
