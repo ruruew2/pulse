@@ -7,7 +7,28 @@ const ArticleDetail = () => {
   const { id } = useParams(); // URL의 :id 값을 가져옴
   const { state } = useLocation();
   const navigate = useNavigate();
-  
+
+    // 조회수 업데이트
+    useEffect(() => {
+      const incrementView = async () => {
+        // 1. 먼저 현재 조회수를 가져옵니다.
+        const { data } = await supabase
+          .from('newsletters')
+          .select('views')
+          .eq('id', id)
+          .single();
+
+        // 2. 현재 조회수 + 1로 업데이트 합니다.
+        await supabase
+          .from('newsletters')
+          .update({ views: (data?.views || 0) + 1 })
+          .eq('id', id);
+      };
+
+      if (id) incrementView();
+    }, [id]);
+
+
   // 1. 데이터 상태 관리 (넘겨받은 데이터가 있으면 우선 사용)
   const [article, setArticle] = useState(state?.data || null);
   const [user, setUser] = useState(null);
