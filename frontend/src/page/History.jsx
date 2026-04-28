@@ -85,7 +85,11 @@ const History = () => {
               </div>
               <h3 className="history-card-title">{item.title}</h3>
               <p className="history-card-preview">
-                {item.content.replace(/<[^>]*>?/gm, '').substring(0, 60)}...
+                {item.content
+  .replace(/<[^>]*>?/gm, '')
+  .replace(/&nbsp;/g, ' ')
+  .replace(/&amp;/g, '&')
+  .substring(0, 60)}...
               </p>
               <div className="history-card-footer">
                 <div className="footer-left">
