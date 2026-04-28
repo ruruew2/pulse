@@ -1,0 +1,60 @@
+.detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 100px 20px;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.detail-header {
+  margin-bottom: 60px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 40px;
+}
+
+.detail-category {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #2563eb;
+  letter-spacing: 2px;
+}
+
+.detail-title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 20px 0;
+  line-height: 1.2;
+  letter-spacing: -2px;
+  word-break: keep-all;
+}
+
+.detail-date {
+  font-family: 'JetBrains Mono';
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+/* ⚠️ 중요: 에디터의 스타일이 상세페이지에서도 유지되게 함 */
+.detail-content {
+  line-height: 1.8;
+  font-size: 1.15rem;
+  color: #333;
+}
+
+.detail-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 40px 0;
+  display: block;
+}
+
+.loading {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'JetBrains Mono';
+  letter-spacing: 5px;
+}

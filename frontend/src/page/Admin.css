@@ -1,0 +1,286 @@
+/* 전체 레이아웃 */
+.admin-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 120px 40px;
+  font-family: 'Pretendard', sans-serif;
+  color: #1a1a1a;
+}
+
+/* 상단 헤더 & 서브타이틀 */
+.admin-header {
+  margin-bottom: 60px;
+  border-bottom: 2px solid #1a1a1a;
+  padding-bottom: 30px;
+}
+
+.admin-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -3px;
+  margin: 0;
+}
+
+.admin-sub {
+  font-size: 0.9rem;
+  color: #999;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+/* 섹션 라벨 (JetBrains Mono 활용) */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #bbb;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* 입력 필드들 */
+.admin-input, .admin-select {
+  width: 100%;
+  padding: 15px 0;
+  border: none;
+  border-bottom: 1px solid #eee;
+  font-size: 1.5rem;
+  font-weight: 700;
+  outline: none;
+  margin-bottom: 30px;
+  transition: border-color 0.3s;
+  background: transparent;
+}
+
+.admin-select {
+  font-size: 1rem;
+  color: #666;
+  cursor: pointer;
+}
+
+.admin-input:focus {
+  border-bottom-color: #1a1a1a;
+}
+
+/* 에디터 스타일 커스텀 (React-Quill) */
+.admin-editor {
+  margin-bottom: 40px;
+}
+
+/* 툴바 배경 & 테두리 제거 */
+.ql-toolbar.ql-snow {
+  border: none !important;
+  border-bottom: 1px solid #eee !important;
+  padding: 15px 0 !important;
+}
+
+/* 본문 영역 */
+.ql-container.ql-snow {
+  border: none !important;
+  min-height: 400px;
+  font-size: 1.1rem;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.ql-editor {
+  padding: 30px 0 !important;
+}
+
+.ql-editor.ql-blank::before {
+  left: 0 !important;
+  color: #ccc !important;
+  font-style: normal !important;
+}
+
+/* 발행 버튼 */
+.publish-btn {
+  width: 100%;
+  padding: 20px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  margin-top: 20px;
+}
+
+.publish-btn:hover:not(:disabled) {
+  background: #000;
+  letter-spacing: 2px;
+}
+
+.publish-btn:disabled {
+  background: #eee;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* 발송 이력 섹션 */
+.history-section {
+  margin-top: 100px;
+  padding-top: 60px;
+  border-top: 1px solid #eee;
+}
+
+.history-item {
+  padding: 25px 0;
+  border-bottom: 1px solid #f5f5f5;
+  transition: all 0.3s;
+}
+
+.history-item:hover {
+  padding-left: 10px;
+}
+
+.history-cat {
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.history-info h3 {
+  margin: 10px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.history-date {
+  font-size: 0.85rem;
+  color: #bbb;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.admin-msg {
+  color: #2563eb;
+  font-weight: 600;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* 에디터 내 이미지 크기 제한 */
+.ql-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+
+
+/* 발송 이력 그리드 */
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+/* 개별 카드 스타일 */
+.history-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 25px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  background: #fff;
+}
+
+.history-card:hover {
+  transform: translateY(-8px);
+  border-color: #1a1a1a;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.history-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 10px 0;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.history-card-preview {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+  height: 4.8em; /* 세 줄 제한 */
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.history-card-footer {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  border-top: 1px solid #f5f5f5;
+  padding-top: 15px;
+}
+
+/* 발행 성공 안내 박스 */
+.admin-msg-box {
+  background: #f9f9f9;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 40px 0;
+  border: 1px dashed #ddd;
+}
+
+.admin-msg {
+  color: #1a1a1a;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* 히스토리 이동 버튼 스타일 */
+.history-nav-btn {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  background: none;
+  border: 1px solid #eee; /* 아주 연한 테두리 */
+  color: #888; /* 차분한 그레이 */
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.history-nav-btn:hover {
+  border-color: #1a1a1a;
+  color: #1a1a1a;
+  background: #fdfdfd;
+}
+
+/* 발행 성공 시 나오는 안내 박스 내 버튼도 통일감 있게 (선택사항) */
+.go-history-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: #2563eb; /* 포인트 컬러 */
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+}

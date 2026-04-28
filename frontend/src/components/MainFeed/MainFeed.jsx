@@ -17,6 +17,14 @@ const MainFeed = () => {
   const designArticles = savedCats.includes('DESIGN') ? articles.filter(a => a.category === 'DESIGN') : [];
   const trendArticles = savedCats.includes('TREND') ? articles.filter(a => a.category === 'TREND') : [];
 
+  const fetchPosts = async () => {
+  const { data } = await supabase
+    .from('newsletters')
+    .select('*')
+    // 'ascending: false'로 하면 최신 글이 맨 위(앞)에 옵니다.
+    .order('created_at', { ascending: false }); 
+    setPosts(data);
+    };
 
   // 1. 로그인 상태 확인
   useEffect(() => {
@@ -246,7 +254,16 @@ useEffect(() => {
   </div>
 </section>
 
-
+{/* 관리자 전용 플로팅 에디터 버튼 */}
+{user && user.email === 'pulse@naver.com' && (
+  <button 
+    className="floating-edit-btn" 
+    onClick={() => navigate('/admin')}
+    title="에디터 페이지로 이동"
+  >
+    <RiQuillPenLine size={24} />
+  </button>
+)}
 
 
       {/* Footer Section */}

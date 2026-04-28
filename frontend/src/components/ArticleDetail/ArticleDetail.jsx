@@ -84,6 +84,12 @@ const ArticleDetail = () => {
           <button className={`action-btn ${bookmarked ? 'active' : ''}`} onClick={handleBookmark}>
             {bookmarked ? '★' : '☆'} 북마크
           </button>
+          <button className="action-btn" onClick={() => {
+            navigator.clipboard.writeText(window.location.href);
+            alert('링크가 복사되었습니다!');
+          }}>
+            ↗ 공유하기
+          </button>
         </div>
 
         <blockquote className="ai-summary">
