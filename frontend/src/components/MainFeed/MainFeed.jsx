@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { RiTerminalBoxLine, RiQuillPenLine, RiPulseLine } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
+import { User, LogOut } from 'lucide-react'; // 상단에 추가
 import { supabase } from "../../supabaseClient";
 import './MainFeed.css';
 
@@ -124,22 +125,33 @@ const MainFeed = () => {
     </div>
   );
 
-  return (
-    <div className="jandi-style-container">
-      <nav className="main-nav">
-        <div className="nav-logo" onClick={() => navigate('/')}>PULSE</div>
-        <div className="nav-auth">
-          {user ? (
-            <div className="user-info">
-              <span className="user-email">{user.email.split('@')[0]}님</span>
-              <button onClick={() => navigate('/mypage')} className="auth-nav-btn mypage">마이페이지</button>
-              <button onClick={handleLogout} className="auth-nav-btn logout">로그아웃</button>
-            </div>
-          ) : (
-            <button onClick={() => navigate('/auth')} className="auth-nav-btn login">로그인 / 회원가입</button>
-          )}
-        </div>
-      </nav>
+return (
+  <div className="jandi-style-container">
+    <nav className="main-nav">
+      <div className="nav-logo" onClick={() => navigate('/')}>PULSE</div>
+      <div className="nav-auth">
+        {user ? (
+          <div className="user-info">
+            {/* 이메일은 CSS에서 모바일일 때만 숨깁니다 */}
+            <span className="user-email">{user.email.split('@')[0]}님</span>
+            
+<button onClick={() => navigate('/mypage')} className="auth-nav-btn mypage">
+  <span className="pc-text">마이페이지</span>
+  <User size={18} className="mobile-icon" /> {/* 👤 대신 사용 */}
+</button>
+
+<button onClick={handleLogout} className="auth-nav-btn logout">
+  <span className="pc-text">로그아웃</span>
+  <LogOut size={18} className="mobile-icon" /> {/* ⎋ 대신 사용 */}
+</button>
+          </div>
+        ) : (
+          <button onClick={() => navigate('/auth')} className="auth-nav-btn login">
+            로그인 / 회원가입
+          </button>
+        )}
+      </div>
+    </nav>
 
       <section className="hero-section">
         <motion.div className="hero-content" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
