@@ -8,6 +8,8 @@ const ArticleDetail = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
+  const isPost = window.location.pathname.startsWith('/post/');
+
   // 1. 상태 관리 (넘겨받은 데이터가 있으면 우선 사용)
   const [article, setArticle] = useState(state?.data || null);
   const [user, setUser] = useState(null);
@@ -98,29 +100,44 @@ const ArticleDetail = () => {
     if (bookmarkData) setBookmarked(true);
   };
 
-  // [기능] 좋아요 토글
-  const handleLike = async () => {
-    if (!user) return alert("로그인 후 이용 가능합니다!");
-    if (liked) {
-      await supabase.from('likes').delete().eq('user_id', user.id).eq('article_id', id);
-      setLiked(false);
-    } else {
-      await supabase.from('likes').insert({ user_id: user.id, article_id: id });
-      setLiked(true);
-    }
-  };
+  /// [기능] 좋아요 토글
+const handleLike = async () => {
+  if (!user) return alert("로그인 후 이용 가능합니다!");
+  if (liked) {
+    await supabase.from('likes').delete()
+      .eq('user_id', user.id)
+      .eq('article_id', id)
+      .eq('source', isPost ? 'newsletter' : 'rss');
+    setLiked(false);
+  } else {
+    await supabase.from('likes').insert({ 
+      user_id: user.id, 
+      article_id: id,
+      source: isPost ? 'newsletter' : 'rss'
+    });
+    setLiked(true);
+  }
+};
 
-  // [기능] 북마크 토글
-  const handleBookmark = async () => {
-    if (!user) return alert("로그인 후 이용 가능합니다!");
-    if (bookmarked) {
-      await supabase.from('bookmarks').delete().eq('user_id', user.id).eq('article_id', id);
-      setBookmarked(false);
-    } else {
-      await supabase.from('bookmarks').insert({ user_id: user.id, article_id: id });
-      setBookmarked(true);
-    }
-  };
+// [기능] 북마크 토글
+const handleBookmark = async () => {
+  if (!user) return alert("로그인 후 이용 가능합니다!");
+  if (bookmarked) {
+    await supabase.from('bookmarks').delete()
+      .eq('user_id', user.id)
+      .eq('article_id', id)
+      .eq('source', isPost ? 'newsletter' : 'rss');
+    setBookmarked(false);
+  } else {
+    await supabase.from('bookmarks').insert({ 
+      user_id: user.id, 
+      article_id: id,
+      source: isPost ? 'newsletter' : 'rss'
+    });
+    setBookmarked(true);
+  }
+};
+
 
   if (loading) return <div className="loading">LOADING CONTENT...</div>;
   if (!article) return <div className="error-msg">기사를 찾을 수 없습니다.</div>;
