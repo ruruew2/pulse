@@ -22,7 +22,7 @@ const MainFeed = () => {
     setLoading(true);
     try {
       // (A) RSS 기사 가져오기 (기존 로직)
-      const rssResponse = await fetch('http://localhost:8000/articles');
+      const response = await fetch('https://pulse-dhro.onrender.com/articles');
       const rssData = await rssResponse.json();
       const formattedRss = rssData.map((item, index) => ({
         ...item,
