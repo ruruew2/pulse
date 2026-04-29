@@ -191,3 +191,29 @@
   transform: translateY(0);
   scale: 0.95;
 }
+
+
+
+.detail-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  position: sticky; /* 스크롤 내려도 고정하고 싶다면 */
+  top: 0;
+  background: #fff; /* 배경색 확인 */
+  z-index: 10;
+}
+
+.nav-logo {
+  font-family: 'Pretendard', sans-serif; /* 본인 폰트 설정 */
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.05em;
+  cursor: pointer;
+  text-align: center;
+}
+
+.nav-spacer {
+  width: 60px; /* back-btn과 비슷한 너비를 줘서 로고를 가운데로 보냄 */
+}

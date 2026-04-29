@@ -141,6 +141,17 @@ const ArticleDetail = () => {
 
   return (
     <div className="detail-container">
+
+      {/* 1. 상단 네비게이션 바 */}
+    <nav className="detail-nav">
+      <button className="back-btn" onClick={handleBack}>← BACK</button>
+      <div className="nav-logo" onClick={() => navigate('/')}>
+        PULSE
+      </div>
+      <div className="nav-spacer"></div> {/* 좌우 균형을 맞추기 위한 빈 공간 */}
+    </nav>
+
+
       <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
       <header className="detail-header">
         <div className="detail-category">#{article.category || 'NEWS'}</div>
