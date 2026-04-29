@@ -284,3 +284,32 @@
   text-decoration: underline;
   margin-top: 10px;
 }
+
+
+
+
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 80px 20px;
+  }
+
+  .admin-title {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+  }
+
+  /* 입력창 폰트 크기 조절 */
+  .admin-input {
+    font-size: 1.1rem;
+  }
+
+  /* 히스토리 그리드를 1열로 고정 */
+  .history-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* 에디터 높이 조절 */
+  .ql-container.ql-snow {
+    min-height: 300px;
+  }
+}

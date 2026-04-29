@@ -417,3 +417,35 @@
   padding-bottom: 20px;
   border-bottom: 1px solid #808080;
 }
+
+
+
+@media (max-width: 768px) {
+  .mypage-container {
+    padding: 80px 20px 40px;
+  }
+
+  .mypage-title {
+    font-size: 2rem;
+  }
+
+  /* 카드를 세로형으로 전환 */
+  .mypage-card {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .mypage-card-img {
+    width: 100%; /* 이미지가 가로를 꽉 채우게 */
+    height: 180px;
+  }
+
+  /* 설정 패널 너비 조정 */
+  .settings-panel {
+    width: calc(100% - 40px);
+    right: 20px;
+    left: 20px;
+    top: 80px;
+  }
+}

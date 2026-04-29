@@ -58,3 +58,24 @@
   font-family: 'JetBrains Mono';
   letter-spacing: 5px;
 }
+
+
+
+@media (max-width: 768px) {
+  .detail-container {
+    padding: 60px 20px;
+  }
+
+  .detail-title {
+    font-size: 2.2rem;
+  }
+
+  .detail-content {
+    font-size: 1.05rem; /* 본문 폰트 살짝 축소 */
+    line-height: 1.7;
+  }
+
+  .detail-content img {
+    margin: 20px 0;
+  }
+}
