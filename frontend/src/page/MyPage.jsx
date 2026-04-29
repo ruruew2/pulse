@@ -30,34 +30,49 @@ const MyPage = () => {
 const fetchBookmarks = async (userId) => {
   const { data } = await supabase
     .from('bookmarks')
-    .select('article_id')
+    .select('article_id, source')
     .eq('user_id', userId);
   
   if (data && data.length > 0) {
-    const ids = data.map(d => d.article_id);
-    const { data: articleData } = await supabase
-      .from('articles')
-      .select('*')
-      .in('id', ids);
-    setBookmarks(articleData || []);
+    const rssIds = data.filter(d => d.source === 'rss').map(d => d.article_id);
+    const newsletterIds = data.filter(d => d.source === 'newsletter').map(d => d.article_id);
+
+    const [rssData, newsletterData] = await Promise.all([
+      rssIds.length > 0 
+        ? supabase.from('articles').select('*').in('id', rssIds).then(r => r.data || [])
+        : Promise.resolve([]),
+      newsletterIds.length > 0 
+        ? supabase.from('newsletters').select('*').in('id', newsletterIds).then(r => r.data || [])
+        : Promise.resolve([])
+    ]);
+
+    setBookmarks([...rssData, ...newsletterData]);
   }
 };
 
 const fetchLikes = async (userId) => {
   const { data } = await supabase
     .from('likes')
-    .select('article_id')  
+    .select('article_id, source')
     .eq('user_id', userId);
-    
+  
   if (data && data.length > 0) {
-    const ids = data.map(d => d.article_id);
-    const { data: articleData } = await supabase
-      .from('articles')
-      .select('*')
-      .in('id', ids);
-    setLikes(articleData || []);
+    const rssIds = data.filter(d => d.source === 'rss').map(d => d.article_id);
+    const newsletterIds = data.filter(d => d.source === 'newsletter').map(d => d.article_id);
+
+    const [rssData, newsletterData] = await Promise.all([
+      rssIds.length > 0 
+        ? supabase.from('articles').select('*').in('id', rssIds).then(r => r.data || [])
+        : Promise.resolve([]),
+      newsletterIds.length > 0 
+        ? supabase.from('newsletters').select('*').in('id', newsletterIds).then(r => r.data || [])
+        : Promise.resolve([])
+    ]);
+
+    setLikes([...rssData, ...newsletterData]);
   }
 };
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -177,7 +192,12 @@ const fetchLikes = async (userId) => {
             <div
               key={idx}
               className="mypage-card"
-              onClick={() => navigate(`/article/${article.id}`, { state: { data: article } })}
+              onClick={() => navigate(
+                article.content 
+                  ? `/post/${article.id}` 
+                  : `/article/${article.id}`, 
+                { state: { data: article } }
+              )}
             >
               <div className="mypage-card-img">
                 <img src={article.image || `https://picsum.photos/seed/${idx}/400/300`} alt="" />
