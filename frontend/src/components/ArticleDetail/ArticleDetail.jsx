@@ -35,6 +35,14 @@ const ArticleDetail = () => {
     initPage();
   }, [id]);
 
+  const handleBack = () => {
+  if (!state) {
+    navigate('/'); 
+  } else {
+    navigate(-1);
+  }
+};
+
   const fetchAnyArticle = async (articleId) => {
     setLoading(true);
     try {
