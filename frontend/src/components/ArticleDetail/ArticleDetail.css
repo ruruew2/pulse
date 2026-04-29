@@ -194,26 +194,58 @@
 
 
 
+/* 상단바 전체 컨테이너 */
 .detail-nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* 왼쪽, 가운데, 오른쪽 정렬 */
   align-items: center;
-  padding: 20px 0;
-  position: sticky; /* 스크롤 내려도 고정하고 싶다면 */
+  padding: 15px 20px;
+  width: 100%;
+  background-color: #fff; /* 배경색이 있어야 뒤의 글자와 안 겹칩니다 */
+  border-bottom: 1px solid #f0f0f0; /* 살짝 구분선 추가 */
+  position: sticky; /* 스크롤 내려도 상단 고정 (선택사항) */
   top: 0;
-  background: #fff; /* 배경색 확인 */
-  z-index: 10;
+  z-index: 100;
 }
 
-.nav-logo {
-  font-family: 'Pretendard', sans-serif; /* 본인 폰트 설정 */
-  font-weight: 800;
-  font-size: 1.5rem;
-  letter-spacing: -0.05em;
+/* 뒤로가기 버튼 */
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
   cursor: pointer;
-  text-align: center;
+  flex: 1; /* 왼쪽 영역 차지 */
+  text-align: left;
+  padding: 0;
 }
 
+/* 중앙 로고 */
+.nav-logo {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  cursor: pointer;
+  flex: 2; /* 가운데 영역 차지 */
+  text-align: center;
+  color: #000;
+}
+
+/* 오른쪽 빈 공간 (균형 맞춤용) */
 .nav-spacer {
-  width: 60px; /* back-btn과 비슷한 너비를 줘서 로고를 가운데로 보냄 */
+  flex: 1;
+}
+
+/* 상세 페이지 전체 컨테이너 간격 조정 */
+.detail-container {
+  max-width: 800px; /* 적절한 너비 */
+  margin: 0 auto;
+  padding-top: 0; /* 네비바가 생겼으므로 조정 */
+}
+
+/* 기사 헤더와 간격 띄우기 */
+.detail-header {
+  margin-top: 40px;
+  padding: 0 20px;
 }
