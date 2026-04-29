@@ -4,3 +4,4 @@ feedparser
 supabase
 python-dotenv
 httpx
+newspaper3k
