@@ -23,7 +23,7 @@ const MainFeed = () => {
     try {
       // (A) RSS 기사 가져오기 (기존 로직)
       const response = await fetch('https://pulse-dhro.onrender.com/articles');
-      const rssData = await rssResponse.json();
+      const rssData = await response.json(); 
       const formattedRss = rssData.map((item, index) => ({
         ...item,
         image: item.image || `https://picsum.photos/seed/${index + 123}/800/600`,
