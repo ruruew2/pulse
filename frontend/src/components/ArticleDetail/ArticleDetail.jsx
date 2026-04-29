@@ -139,18 +139,18 @@ const ArticleDetail = () => {
   // 날짜 포맷팅 안전 장치
   const displayDate = (article.created_at || article.publishedAt || article.published_at || '').split(/[ T]/)[0];
 
-  return (
-    <div className="detail-container">
-
-      {/* 1. 상단 네비게이션 바 */}
+return (
+  <div className="detail-container">
+    {/* 헤더 네비게이션 영역 */}
     <nav className="detail-nav">
-      <button className="back-btn" onClick={handleBack}>← BACK</button>
+      <button className="back-btn" onClick={handleBack}>
+        ← BACK
+      </button>
       <div className="nav-logo" onClick={() => navigate('/')}>
         PULSE
       </div>
-      <div className="nav-spacer"></div> {/* 좌우 균형을 맞추기 위한 빈 공간 */}
+      <div className="nav-spacer"></div> {/* 오른쪽 균형을 맞추기 위한 빈 박스 */}
     </nav>
-
 
       <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
       <header className="detail-header">
