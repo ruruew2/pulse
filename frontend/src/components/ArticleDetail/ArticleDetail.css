@@ -221,31 +221,66 @@
   padding: 0;
 }
 
-/* 중앙 로고 */
+
+
+
+/* 상단바 전체 컨테이너 */
+.detail-nav {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  width: 100%;
+  height: 60px; /* 높이를 고정해서 정렬을 더 정확하게 */
+  background-color: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+  backdrop-filter: blur(8px); /* 뒤 배경이 살짝 흐려지는 고급스러운 효과 */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* 아주 연한 구분선 */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 뒤로가기 버튼 */
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.3); /* 더 연한 반투명 느낌 */
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 101; /* 로고보다 위에 있게 */
+}
+
+.back-btn:hover {
+  color: rgba(0, 0, 0, 0.8); /* 호버했을 때만 진해지게 */
+}
+
+/* 중앙 로고 - 절대 좌표로 완전 중앙 배치 */
 .nav-logo {
-  font-size: 24px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* 정확히 화면 가로 중앙 */
+  font-size: 22px;
   font-weight: 900;
   letter-spacing: -1px;
   cursor: pointer;
-  flex: 2; /* 가운데 영역 차지 */
-  text-align: center;
   color: #000;
+  text-align: center;
 }
 
-/* 오른쪽 빈 공간 (균형 맞춤용) */
+/* spacer는 이제 필요 없으니 제거하거나 그냥 두셔도 됩니다 */
 .nav-spacer {
   flex: 1;
 }
 
-/* 상세 페이지 전체 컨테이너 간격 조정 */
+/* 상세 페이지 전체 컨테이너 */
 .detail-container {
-  max-width: 800px; /* 적절한 너비 */
+  max-width: 800px;
   margin: 0 auto;
-  padding-top: 0; /* 네비바가 생겼으므로 조정 */
 }
 
-/* 기사 헤더와 간격 띄우기 */
+/* 기사 헤더 간격 */
 .detail-header {
-  margin-top: 40px;
+  margin-top: 60px; /* nav 높이만큼 좀 더 여유 있게 */
   padding: 0 20px;
 }
