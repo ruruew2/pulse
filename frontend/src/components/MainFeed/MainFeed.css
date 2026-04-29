@@ -611,3 +611,52 @@ html, body {
     height: 50px;
   }
 }
+
+
+
+
+
+/* 스마트폰 (768px 이하) 섹션 안에 추가 */
+@media (max-width: 768px) {
+  
+  /* 1. 네비게이션 바 패딩 줄이기 */
+  .main-nav {
+    padding: 1rem 1.5rem; /* 양옆 여백을 좁게 해서 로고와 버튼 공간 확보 */
+  }
+
+  /* 2. 모바일에서 로고 크기 축소 */
+  .nav-logo {
+    font-size: 1.2rem; 
+  }
+
+  /* 3. 유저 정보 레이아웃 조정 */
+  .nav-auth {
+    gap: 8px; /* 버튼 사이 간격 좁히기 */
+  }
+
+  .user-info {
+    gap: 8px;
+  }
+
+  /* 4. 이메일 아이디 숨기기 (공간 확보용) */
+  /* 모바일은 화면이 좁아서 'OOO님'을 숨기거나 폰트를 아주 작게 하는 게 좋아요 */
+  .user-email {
+    display: none; 
+  }
+
+  /* 5. 버튼 텍스트 크기 및 패딩 축소 */
+  .auth-nav-btn {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  /* 6. 헤더 높이가 낮아졌으니 Hero 섹션 패딩도 조절 */
+  .hero-section {
+    padding-top: 80px; 
+  }
+
+  /* 7. 아티클 카드 제목 크기 축소 */
+  .article-body h3 {
+    font-size: 1.2rem;
+  }
+}
