@@ -156,12 +156,15 @@ const ArticleDetail = () => {
            <button className={`action-btn ${bookmarked ? 'active' : ''}`} onClick={handleBookmark}>
              {bookmarked ? '🔖' : '☆'}
            </button>
-           <button className="action-btn" onClick={() => {
-             navigator.clipboard.writeText(window.location.href);
-             alert('링크가 복사되었습니다! 🔗');
-           }}>
-             ⎋
-           </button>
+            <button className="action-btn" onClick={() => {
+              const url = article.content 
+                ? `${window.location.origin}/post/${article.id}`  // 직접 발행 글
+                : `${window.location.origin}/article/${article.id}`; // RSS 글
+              navigator.clipboard.writeText(url);
+              alert('링크가 복사되었습니다! 🔗');
+            }}>
+              ⎋
+            </button>
         </div>
 
         {/* 직접 발행한 기사 vs RSS 기사 구분 렌더링 */}

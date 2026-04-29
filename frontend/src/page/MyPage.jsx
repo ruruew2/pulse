@@ -27,21 +27,37 @@ const MyPage = () => {
     });
   }, []);
 
-  const fetchBookmarks = async (userId) => {
-    const { data } = await supabase
-      .from('bookmarks')
-      .select('article_id, articles(*)')
-      .eq('user_id', userId);
-    setBookmarks(data?.map(d => d.articles) || []);
-  };
+const fetchBookmarks = async (userId) => {
+  const { data } = await supabase
+    .from('bookmarks')
+    .select('article_id')
+    .eq('user_id', userId);
+  
+  if (data && data.length > 0) {
+    const ids = data.map(d => d.article_id);
+    const { data: articleData } = await supabase
+      .from('articles')
+      .select('*')
+      .in('id', ids);
+    setBookmarks(articleData || []);
+  }
+};
 
-  const fetchLikes = async (userId) => {
-    const { data } = await supabase
-      .from('likes')
-      .select('article_id, articles(*)')
-      .eq('user_id', userId);
-    setLikes(data?.map(d => d.articles) || []);
-  };
+const fetchLikes = async (userId) => {
+  const { data } = await supabase
+    .from('likes')
+    .select('article_id')  
+    .eq('user_id', userId);
+    
+  if (data && data.length > 0) {
+    const ids = data.map(d => d.article_id);
+    const { data: articleData } = await supabase
+      .from('articles')
+      .select('*')
+      .in('id', ids);
+    setLikes(articleData || []);
+  }
+};
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

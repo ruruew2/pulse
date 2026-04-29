@@ -78,7 +78,7 @@ const History = () => {
       <div className="history-grid">
         {history.map((item) => (
           <div key={item.id} className="history-card-wrapper">
-            <Link to={`/article/${item.id}`} className="history-card">
+            <Link to={`/post/${item.id}`} className="history-card">
               <div className="history-card-header">
                 <span className="history-cat">{item.category}</span>
                 <span className="history-date">{item.created_at?.split('T')[0]}</span>
