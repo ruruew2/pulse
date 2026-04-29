@@ -143,9 +143,6 @@ return (
   <div className="detail-container">
     {/* 헤더 네비게이션 영역 */}
     <nav className="detail-nav">
-      <button className="back-btn" onClick={handleBack}>
-        ← BACK
-      </button>
       <div className="nav-logo" onClick={() => navigate('/')}>
         PULSE
       </div>
