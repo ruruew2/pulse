@@ -19,27 +19,26 @@ const ArticleDetail = () => {
 
     const initPage = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
 
-      // 데이터가 없으면 DB에서 탐색
       if (!article && id) {
         await fetchAnyArticle(id);
-      } else if (article) {
-        // 데이터가 이미 있는 경우 (state로 넘어온 경우)
+      } else if (article && id) {
+        // 이미 데이터가 있는 경우 (state 전달)
         const tableName = article.content ? 'newsletters' : 'articles';
         incrementView(id, tableName);
-        if (session?.user) checkUserStatus(session.user.id, id);
+        if (currentUser) checkUserStatus(currentUser.id, id);
       }
     };
 
     initPage();
   }, [id]);
 
-  // [수정 핵심] 테이블명을 'articles'로 변경하여 탐색
   const fetchAnyArticle = async (articleId) => {
     setLoading(true);
     try {
-      // 1. 발행글(newsletters) 먼저 확인
+      // 1. newsletters 테이블 먼저 확인
       let { data, error } = await supabase
         .from('newsletters')
         .select('*')
@@ -48,10 +47,10 @@ const ArticleDetail = () => {
 
       let currentTable = 'newsletters';
 
-      // 2. 없으면 RSS(articles) 테이블 확인
+      // 2. 없으면 articles 테이블 확인
       if (!data) {
         const { data: rssData } = await supabase
-          .from('articles') // 'rss_articles'에서 'articles'로 수정 완료!
+          .from('articles')
           .select('*')
           .eq('id', articleId)
           .single();
@@ -129,6 +128,9 @@ const ArticleDetail = () => {
   if (loading) return <div className="loading">LOADING...</div>;
   if (!article) return <div className="error-msg">기사를 찾을 수 없습니다.</div>;
 
+  // 날짜 포맷팅 안전 장치
+  const displayDate = (article.created_at || article.publishedAt || article.published_at || '').split(/[ T]/)[0];
+
   return (
     <div className="detail-container">
       <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
@@ -136,7 +138,7 @@ const ArticleDetail = () => {
         <div className="detail-category">#{article.category || 'NEWS'}</div>
         <h1 className="detail-title">{article.title}</h1>
         <div className="detail-meta">
-          <span>PULSE EDITORIAL</span> · <span>{article.created_at?.split('T')[0] || article.publishedAt?.split(' ')[0]}</span> · <span>👁 {article.views || 0} views</span>
+          <span>PULSE EDITORIAL</span> · <span>{displayDate}</span> · <span>👁 {article.views || 0} views</span>
         </div>
       </header>
 
@@ -144,9 +146,9 @@ const ArticleDetail = () => {
 
       <main className="detail-content">
         <div className="action-buttons">
-           <button className={`action-btn ${liked ? 'active' : ''}`} onClick={handleLike}>{liked ? '❤️' : '♡'}</button>
-           <button className={`action-btn ${bookmarked ? 'active' : ''}`} onClick={handleBookmark}>{bookmarked ? '🔖' : '☆'}</button>
-           <button className="action-btn" onClick={handleShare}>⎋</button>
+          <button className={`action-btn ${liked ? 'active' : ''}`} onClick={handleLike}>{liked ? '❤️' : '♡'}</button>
+          <button className={`action-btn ${bookmarked ? 'active' : ''}`} onClick={handleBookmark}>{bookmarked ? '🔖' : '☆'}</button>
+          <button className="action-btn" onClick={handleShare}>⎋</button>
         </div>
 
         {article.content ? (
@@ -157,7 +159,16 @@ const ArticleDetail = () => {
               <span className="summary-label">AI SUMMARY</span>
               <p>{article.summary || '내용 요약 중입니다...'}</p>
             </blockquote>
-            <a href={article.url} target="_blank" rel="noreferrer" className="read-more-btn">READ FULL ARTICLE →</a>
+            <div className="full-text">
+              <p>
+                현재 이 기사는 외부 매체(RSS)를 통해 큐레이션된 콘텐츠입니다.
+                PULSE는 독자분들께 가장 핵심적인 인사이트를 빠르게 전달하기 위해 요약된 정보를 제공하고 있습니다.
+              </p>
+              <p style={{ marginTop: '20px' }}>
+                전체 기사 내용과 상세한 이미지는 아래 <b>'READ FULL ARTICLE'</b> 버튼을 통해 원문 사이트에서 확인하실 수 있습니다.
+              </p>
+              <a href={article.url} target="_blank" rel="noreferrer" className="read-more-btn">READ FULL ARTICLE →</a>
+            </div>
           </div>
         )}
       </main>
