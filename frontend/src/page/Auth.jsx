@@ -28,7 +28,7 @@ const Auth = () => {
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) setError(error.message);
       else {
-        setError('이메일을 확인해주세요!');
+        setError('회원가입 완료! 로그인 해주세요.');
         setIsLogin(true);
       }
     }
