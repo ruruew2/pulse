@@ -494,7 +494,8 @@ html, body {
   top: 0;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; 은 그대로 두셔도 됩니다. */
+  justify-content: space-between; 
   align-items: center;
   padding: 1.5rem 4rem;
   box-sizing: border-box;
@@ -504,16 +505,25 @@ html, body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+
 .nav-logo {
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: -1px;
   cursor: pointer;
+  flex-shrink: 0; /* 로고 크기 유지 */
 }
 
 .nav-auth {
   display: flex;
   align-items: center;
+  margin-left: auto; /* 로고를 제외한 나머지 공간을 다 차지해서 오른쪽으로 밀어버림 */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* 이메일과 버튼 사이 간격 */
 }
 
 .auth-nav-btn {
@@ -537,22 +547,12 @@ html, body {
   border-color: #1a1a1a;
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* 버튼 사이의 간격 */
-}
 
 .auth-nav-btn.login:hover {
   background: transparent;
   color: #1a1a1a;
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
 
 .user-email {
   font-size: 0.9rem;
