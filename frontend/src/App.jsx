@@ -8,6 +8,7 @@ import Auth from './page/Auth';
 import MyPage from './page/MyPage';
 import Admin from './page/Admin';
 import History from './page/History';
+import Onboarding from './page/Onboarding';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,6 +42,7 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/history" element={<History />} />
+            <Route path="/onboarding" element={<Onboarding />} />
           </Routes>
         )}
       </AnimatePresence>
