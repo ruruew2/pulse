@@ -17,46 +17,33 @@ const MainFeed = () => {
   const designArticles = savedCats.includes('DESIGN') ? articles.filter(a => a.category === 'DESIGN') : [];
   const trendArticles = savedCats.includes('TREND') ? articles.filter(a => a.category === 'TREND') : [];
 
-  const fetchAllData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('https://pulse-dhro.onrender.com/articles');
-      const rssData = await response.json();
-      const formattedRss = rssData.map((item, index) => ({
-        ...item,
-        image: item.image || `https://picsum.photos/seed/${index + 123}/800/600`,
-        publishedAt: item.published_at,
-        source: 'rss'
-      }));
+const fetchAllData = async () => {
+  setLoading(true);
+  try {
+    const { data: supabaseData, error } = await supabase
+      .from('newsletters')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-      const { data: supabaseData, error } = await supabase
-        .from('newsletters')
-        .select('*')
-        .order('created_at', { ascending: false });
+    if (error) throw error;
 
-      if (error) throw error;
+    const formatted = (supabaseData || []).map(item => ({
+      id: item.id,
+      title: item.title,
+      content: item.content,
+      category: item.category,
+      publishedAt: item.created_at,
+      image: item.image || `https://picsum.photos/seed/${item.id}/800/600`,
+      source: 'newsletter'
+    }));
 
-      const formattedSupabase = (supabaseData || []).map(item => ({
-        id: item.id,
-        title: item.title,
-        content: item.content,
-        category: item.category,
-        publishedAt: item.created_at,
-        image: item.image || `https://picsum.photos/seed/${item.id}/800/600`,
-        source: 'newsletter'
-      }));
-
-      const combined = [...formattedSupabase, ...formattedRss].sort((a, b) =>
-        new Date(b.publishedAt) - new Date(a.publishedAt)
-      );
-
-      setArticles(combined);
-    } catch (e) {
-      console.error("데이터 로드 실패", e);
-    } finally {
-      setLoading(false);
-    }
-  };
+    setArticles(formatted);
+  } catch (e) {
+    console.error("데이터 로드 실패", e);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchAllData();
