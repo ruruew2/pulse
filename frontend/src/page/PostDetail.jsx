@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import './PostDetail.css'; // 전용 CSS 하나 만들게요!
+import './PostDetail.css'; 
+import { createPortal } from 'react-dom';
 
 const PostDetail = () => {
   const { id } = useParams();

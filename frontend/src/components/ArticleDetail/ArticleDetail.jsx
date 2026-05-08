@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './ArticleDetail.css';
 import { supabase } from '../../supabaseClient';
+import { createPortal } from 'react-dom';
 
 const ArticleDetail = () => {
   const { id } = useParams();
@@ -120,25 +121,28 @@ const ArticleDetail = () => {
 
   const displayDate = (article.created_at || article.publishedAt || '').split(/[ T]/)[0];
 
-  return (
-    <div style={{ width: '100%' }}>
-      {/* 선은 컨테이너 밖에서 화면 전체 너비 기준 0으로 고정 */}
-      <div style={{
-        position: 'fixed',
-        top: '64px',
-        left: 0,
-        width: `${scrollProgress}%`,
-        height: '3px',
-        backgroundColor: '#000',
-        zIndex: 9999,
-        transition: 'width 0.1s ease-out',
-        pointerEvents: 'none'
-      }} />
+return (
+    <>
+      {/* 1. 프로그레스 바: Portal로 레이아웃 탈출 */}
+      {createPortal(
+        <div style={{
+          position: 'fixed',
+          top: '64px',
+          left: 0,
+          width: `${scrollProgress}%`,
+          height: '3px',
+          backgroundColor: '#000',
+          zIndex: 99999,
+          transition: 'width 0.1s ease-out',
+          pointerEvents: 'none'
+        }} />,
+        document.body
+      )}
 
+      {/* 2. 본문 컨테이너: 이제 넙대대하지 않고 예전처럼 날씬해집니다 */}
       <div className="detail-container">
         <nav className="detail-nav">
           <div className="nav-logo" onClick={() => navigate('/')}>PULSE</div>
-          <div className="nav-spacer"></div>
         </nav>
 
         <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
@@ -175,8 +179,8 @@ const ArticleDetail = () => {
             </div>
           )}
         </main>
-      </div>
-    </div>
+      </div> {/* ⬅️ 이 닫는 태그가 마지막이어야 합니다! */}
+    </>
   );
 };
 
