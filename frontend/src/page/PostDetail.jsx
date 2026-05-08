@@ -9,6 +9,8 @@ const PostDetail = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   useEffect(() => {
     const fetchPost = async () => {
       const { data, error } = await supabase

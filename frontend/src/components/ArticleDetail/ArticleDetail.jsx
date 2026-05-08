@@ -14,6 +14,8 @@ const ArticleDetail = () => {
   const [bookmarked, setBookmarked] = useState(false);
   const [loading, setLoading] = useState(!state?.data);
 
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -29,7 +31,7 @@ const ArticleDetail = () => {
       return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    
+
 
     const initPage = async () => {
       const { data: { session } } = await supabase.auth.getSession();
