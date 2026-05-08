@@ -9,8 +9,6 @@ const PostDetail = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [scrollProgress, setScrollProgress] = useState(0);
-
   useEffect(() => {
     const fetchPost = async () => {
       const { data, error } = await supabase
@@ -31,44 +29,33 @@ const PostDetail = () => {
     fetchPost();
   }, [id, navigate]);
 
-  // [기존 코드 아래에 추가] 스크롤 프로그레스 로직
-useEffect(() => {
-  const updateScroll = () => {
-    const currentScrollY = window.scrollY;
+  useEffect(() => {
+  const handleScroll = () => {
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (totalHeight <= 0) return;
-    const progress = (currentScrollY / totalHeight) * 100;
+    const progress = (window.scrollY / totalHeight) * 100;
     setScrollProgress(progress);
   };
-
-  window.addEventListener("scroll", updateScroll);
-  return () => window.removeEventListener("scroll", updateScroll);
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
 }, []);
 
   if (loading) return <div className="loading">LOADING CONTENT...</div>;
   if (!post) return null;
 
-return (
+  return (
     <div className="detail-container">
-      {/* 1. 스크롤 진행 바 (고정 위치) */}
+      <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
+
       <div style={{
         position: 'fixed',
-        top: '0', // 만약 상단 nav가 없다면 0, 있다면 nav 높이만큼(64px) 내리세요
+        top: '64px', // Nav 높이에 맞춰주세요 (보통 64px)
         left: 0,
         width: `${scrollProgress}%`,
-        height: '4px', // 조금 더 잘 보이게 4px 추천!
-        background: '#000',
+        height: '2px', // 아주 얇게!
+        backgroundColor: '#1a1a1a', // 너무 진한 검정 말고 살짝 힘 뺀 차콜색
         zIndex: 1001,
         transition: 'width 0.1s ease-out'
       }} />
-
-      {/* 2. 상단 네비게이션 영역 (없다면 이 버튼만 유지) */}
-      <nav className="detail-nav" style={{ display: 'flex', alignItems: 'center', height: '64px', padding: '0 20px' }}>
-        <button className="back-btn" onClick={() => navigate(-1)} style={{ cursor: 'pointer' }}>
-          ← BACK
-        </button>
-        {/* 중앙 로고를 넣고 싶다면 여기에 추가하세요 */}
-      </nav>
       
       <article className="detail-article">
         <header className="detail-header">
@@ -77,7 +64,7 @@ return (
           <time className="detail-date">{post.created_at?.split('T')[0]}</time>
         </header>
 
-        {/* 에디터 내용 렌더링 */}
+        {/* 에디터에서 작성한 HTML 내용을 그대로 렌더링 */}
         <div 
           className="detail-content ql-editor" 
           dangerouslySetInnerHTML={{ __html: post.content }} 
