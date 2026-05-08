@@ -5,6 +5,7 @@ import { supabase } from '../supabaseClient';
 import { useNavigate, useLocation } from 'react-router-dom'; 
 import './Admin.css';
 
+
 const Admin = () => {
   const navigate = useNavigate();
   const { state } = useLocation(); // 👈 히스토리에서 보낸 데이터를 받는 곳
@@ -39,6 +40,9 @@ const Admin = () => {
       navigate(targetPath);
     }
   };
+
+  const [previewMode, setPreviewMode] = useState('web');
+
 
   const imageHandler = () => {
     const input = document.createElement('input');
@@ -128,6 +132,41 @@ const Admin = () => {
           <option>TREND</option>
         </select>
         <ReactQuill ref={quillRef} theme="snow" value={content} onChange={setContent} modules={modules} className="admin-editor" placeholder="내용을 입력하세요..." />
+
+{/* 미리보기 토글 */}
+<div className="preview-toggle">
+  <button 
+    className={previewMode === 'web' ? 'toggle-btn active' : 'toggle-btn'}
+    onClick={() => setPreviewMode('web')}
+  >
+    WEB VIEW
+  </button>
+  <button 
+    className={previewMode === 'email' ? 'toggle-btn active' : 'toggle-btn'}
+    onClick={() => setPreviewMode('email')}
+  >
+    EMAIL PREVIEW
+  </button>
+</div>
+
+{previewMode === 'email' && (
+  <div className="email-preview">
+    <div className="email-header">
+      <h2 className="email-brand">PULSE</h2>
+      <p className="email-tagline">Today's Editorial Brief</p>
+    </div>
+    <div className="email-body">
+      <span className="email-category">{category}</span>
+      <h1 className="email-title">{title || '제목을 입력하세요'}</h1>
+      <div className="email-content" dangerouslySetInnerHTML={{ __html: content }} />
+    </div>
+    <div className="email-footer">
+      <p>© 2026 PULSE. 읽는 경험을 디자인하다</p>
+    </div>
+  </div>
+)}
+
+
 
         {msg && (
           <div className="admin-msg-box">

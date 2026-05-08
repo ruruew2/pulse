@@ -339,3 +339,94 @@
 .publish-btn {
   flex: 2;
 }
+
+
+
+.preview-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 30px;
+  border: 1px solid #eee;
+  width: fit-content;
+}
+
+.toggle-btn {
+  padding: 10px 24px;
+  background: none;
+  border: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #999;
+  transition: all 0.3s;
+}
+
+.toggle-btn.active {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.email-preview {
+  border: 1px solid #eee;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.email-header {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 40px;
+  text-align: center;
+}
+
+.email-brand {
+  font-family: 'Silkscreen', cursive;
+  font-size: 2rem;
+  margin: 0 0 8px 0;
+}
+
+.email-tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #999;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.email-body {
+  padding: 40px;
+}
+
+.email-category {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: #999;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.email-title {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #1a1a1a;
+  padding-bottom: 20px;
+}
+
+.email-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #444;
+}
+
+.email-footer {
+  padding: 20px 40px;
+  border-top: 1px solid #eee;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #999;
+}
