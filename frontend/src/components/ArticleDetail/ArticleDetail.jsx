@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './ArticleDetail.css';
+import { createPortal } from 'react-dom';
 import { supabase } from '../../supabaseClient';
 
 const ArticleDetail = () => {
@@ -140,56 +141,75 @@ const ArticleDetail = () => {
   const displayDate = (article.created_at || article.publishedAt || article.published_at || '').split(/[ T]/)[0];
 
 return (
-  <div className="detail-container">
-    {/* 헤더 네비게이션 영역 */}
-    <nav className="detail-nav">
-      <div className="nav-logo" onClick={() => navigate('/')}>
-        PULSE
-      </div>
-      <div className="nav-spacer"></div> {/* 오른쪽 균형을 맞추기 위한 빈 박스 */}
-    </nav>
+    <>
+      {/* 1. 프로그레스 바를 레이아웃 밖(body)으로 강제 탈출시켜 넙대대 현상을 원천 차단합니다. */}
+      {createPortal(
+        <div style={{
+          position: 'fixed',
+          top: '64px',
+          left: 0,
+          width: `${scrollProgress}%`,
+          height: '3px',
+          backgroundColor: '#000',
+          zIndex: 99999,
+          transition: 'width 0.1s ease-out',
+          pointerEvents: 'none'
+        }} />,
+        document.body
+      )}
 
-      <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
-      <header className="detail-header">
-        <div className="detail-category">#{article.category || 'NEWS'}</div>
-        <h1 className="detail-title">{article.title}</h1>
-        <div className="detail-meta">
-          <span>PULSE EDITORIAL</span> · <span>{displayDate}</span> · <span>👁 {article.views || 0} views</span>
-        </div>
-      </header>
-
-      {article.image && <div className="detail-hero-img"><img src={article.image} alt="" /></div>}
-
-      <main className="detail-content">
-        <div className="action-buttons">
-          <button className={`action-btn ${liked ? 'active' : ''}`} onClick={handleLike}>{liked ? '❤️' : '♡'}</button>
-          <button className={`action-btn ${bookmarked ? 'active' : ''}`} onClick={handleBookmark}>{bookmarked ? '🔖' : '☆'}</button>
-          <button className="action-btn" onClick={handleShare}>⎋</button>
-        </div>
-
-        {article.content ? (
-          <div className="full-text ql-editor" dangerouslySetInnerHTML={{ __html: article.content }} />
-        ) : (
-          <div className="rss-summary-container">
-            <blockquote className="ai-summary">
-              <span className="summary-label">AI SUMMARY</span>
-              <p>{article.summary || '내용 요약 중입니다...'}</p>
-            </blockquote>
-            <div className="full-text">
-              <p>
-                현재 이 기사는 외부 매체(RSS)를 통해 큐레이션된 콘텐츠입니다.
-                PULSE는 독자분들께 가장 핵심적인 인사이트를 빠르게 전달하기 위해 요약된 정보를 제공하고 있습니다.
-              </p>
-              <p style={{ marginTop: '20px' }}>
-                전체 기사 내용과 상세한 이미지는 아래 <b>'READ FULL ARTICLE'</b> 버튼을 통해 원문 사이트에서 확인하실 수 있습니다.
-              </p>
-              <a href={article.url} target="_blank" rel="noreferrer" className="read-more-btn">READ FULL ARTICLE →</a>
-            </div>
+      {/* 2. 본문 영역: 이제 선이 나갔으므로 어제처럼 예쁘고 날씬한 폭이 유지됩니다. */}
+      <div className="detail-container">
+        <nav className="detail-nav">
+          <div className="nav-logo" onClick={() => navigate('/')}>
+            PULSE
           </div>
-        )}
-      </main>
-    </div>
+          <div className="nav-spacer"></div>
+        </nav>
+
+        <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
+        
+        <header className="detail-header">
+          <div className="detail-category">#{article.category || 'NEWS'}</div>
+          <h1 className="detail-title">{article.title}</h1>
+          <div className="detail-meta">
+            <span>PULSE EDITORIAL</span> · <span>{displayDate}</span> · <span>👁 {article.views || 0} views</span>
+          </div>
+        </header>
+
+        {article.image && <div className="detail-hero-img"><img src={article.image} alt="" /></div>}
+
+        <main className="detail-content">
+          <div className="action-buttons">
+            <button className={`action-btn ${liked ? 'active' : ''}`} onClick={handleLike}>{liked ? '❤️' : '♡'}</button>
+            <button className={`action-btn ${bookmarked ? 'active' : ''}`} onClick={handleBookmark}>{bookmarked ? '🔖' : '☆'}</button>
+            <button className="action-btn" onClick={handleShare}>⎋</button>
+          </div>
+
+          {article.content ? (
+            <div className="full-text ql-editor" dangerouslySetInnerHTML={{ __html: article.content }} />
+          ) : (
+            <div className="rss-summary-container">
+              <blockquote className="ai-summary">
+                <span className="summary-label">AI SUMMARY</span>
+                <p>{article.summary || '내용 요약 중입니다...'}</p>
+              </blockquote>
+              <div className="full-text">
+                <p>
+                  현재 이 기사는 외부 매체(RSS)를 통해 큐레이션된 콘텐츠입니다.
+                  PULSE는 독자분들께 가장 핵심적인 인사이트를 빠르게 전달하기 위해 요약된 정보를 제공하고 있습니다.
+                </p>
+                <p style={{ marginTop: '20px' }}>
+                  전체 기사 내용과 상세한 이미지는 아래 <b>'READ FULL ARTICLE'</b> 버튼을 통해 원문 사이트에서 확인하실 수 있습니다.
+                </p>
+                <a href={article.url} target="_blank" rel="noreferrer" className="read-more-btn">READ FULL ARTICLE →</a>
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
+    </>
   );
-};
+}; 
 
 export default ArticleDetail;
