@@ -133,11 +133,15 @@
 
 /* 5. 본문 콘텐츠 */
 .detail-content {
-  line-height: 1.9; /* 줄 간격 더 넉넉하게 */
+  max-width: 1000px;      /* ← 이거 추가 */
+  margin: 0 auto;         /* ← 이거 추가 */
+  padding: 0 40px;        /* ← 이거 추가 */
+  line-height: 1.9;
   font-size: 1.2rem;
   letter-spacing: -0.01em;
   color: #222;
 }
+
 
 /* AI 요약 */
 .ai-summary {
@@ -244,6 +248,10 @@
 
 
 @media (max-width: 768px) {
+    .detail-content {
+    padding: 0 20px;
+  }
+  
   .detail-header {
     margin: 40px auto;
     padding: 0 20px;
