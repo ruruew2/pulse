@@ -167,7 +167,13 @@ const ArticleDetail = () => {
                 <p>{article.summary || '내용 요약 중입니다...'}</p>
               </blockquote>
               <div className="full-text">
-                <p>현재 이 기사는 외부 매체(RSS)를 통해 큐레이션된 콘텐츠입니다.</p>
+      <p>
+        현재 이 기사는 외부 매체(RSS)를 통해 큐레이션된 콘텐츠입니다.
+        PULSE는 독자분들께 가장 핵심적인 인사이트를 빠르게 전달하기 위해 요약된 정보를 제공하고 있습니다.
+      </p>
+      <p style={{ marginTop: '20px' }}>
+        전체 기사 내용과 상세한 이미지는 아래 <b>'READ FULL ARTICLE'</b> 버튼을 통해 원문 사이트에서 확인하실 수 있습니다.
+      </p>
                 <a href={article.url} target="_blank" rel="noreferrer" className="read-more-btn">READ FULL ARTICLE →</a>
               </div>
             </div>
