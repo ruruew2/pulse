@@ -126,7 +126,7 @@ const ArticleDetail = () => {
           left: 0,
           width: `${scrollProgress}%`,
           height: '3px',
-          backgroundColor: '#000',
+          backgroundColor: '#939393',
           zIndex: 99999,
           transition: 'width 0.1s ease-out',
           pointerEvents: 'none'
