@@ -121,8 +121,8 @@ const ArticleDetail = () => {
   const displayDate = (article.created_at || article.publishedAt || '').split(/[ T]/)[0];
 
   return (
-    <>
-      {/* ✅ 프로그레스 바를 컨테이너 밖으로 완전히 탈출시켰습니다. 이제 넙대대해지지 않아요! */}
+    <div style={{ width: '100%' }}>
+      {/* 선은 컨테이너 밖에서 화면 전체 너비 기준 0으로 고정 */}
       <div style={{
         position: 'fixed',
         top: '64px',
@@ -176,7 +176,7 @@ const ArticleDetail = () => {
           )}
         </main>
       </div>
-    </>
+    </div>
   );
 };
 
