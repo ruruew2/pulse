@@ -44,12 +44,13 @@ const PostDetail = () => {
     <div className="detail-container">
       <div style={{
         position: 'fixed',
-        top: '64px',
-        left: 0,
-        width: `${scrollProgress}%`,
-        height: '2px',
-        backgroundColor: '#d1d1d1',
-        zIndex: 1001
+        top: '64px', 
+        left: 0, // 화면 왼쪽 끝에 딱 붙임
+        width: `${scrollProgress}vw`, // ⚠️ % 대신 vw를 써서 화면 전체 너비 기준 계산!
+        height: '3px',
+        backgroundColor: '#000',
+        zIndex: 9999, // 네비게이션보다 무조건 위로!
+        transition: 'width 0.1s ease-out'
       }} />
       
       <article className="detail-article">

@@ -159,16 +159,16 @@ return (
       <div className="nav-spacer"></div> {/* 오른쪽 균형을 맞추기 위한 빈 박스 */}
     </nav>
 
-    <div style={{
-      position: 'fixed',
-      top: '64px', // Nav 높이에 맞춰주세요 (보통 64px)
-      left: 0,
-      width: `${scrollProgress}%`,
-      height: '2px', // 아주 얇게!
-      backgroundColor: '#1a1a1a', // 너무 진한 검정 말고 살짝 힘 뺀 차콜색
-      zIndex: 1001,
-      transition: 'width 0.1s ease-out'
-    }} />
+<div style={{
+  position: 'fixed',
+  top: '64px', 
+  left: 0, // 화면 왼쪽 끝에 딱 붙임
+  width: `${scrollProgress}vw`, // ⚠️ % 대신 vw를 써서 화면 전체 너비 기준 계산!
+  height: '3px',
+  backgroundColor: '#000',
+  zIndex: 9999, // 네비게이션보다 무조건 위로!
+  transition: 'width 0.1s ease-out'
+}} />
 
       <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
       <header className="detail-header">
