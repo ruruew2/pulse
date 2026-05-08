@@ -114,7 +114,24 @@ const fetchAllData = async () => {
     return () => clearTimeout(timer);
   }, [text, isDeleting, typingSpeed]);
 
-  if (loading) return <div className="loading-container">PULSE IS LOADING...</div>;
+  if (loading) return (
+  <div className="detail-container">
+    <nav className="detail-nav">
+      <div className="nav-logo">PULSE</div>
+    </nav>
+
+    <div className="skeleton-wrapper">
+      <div className="skeleton skeleton-category" />
+      <div className="skeleton skeleton-title" />
+      <div className="skeleton skeleton-title short" />
+      <div className="skeleton skeleton-meta" />
+      <div className="skeleton skeleton-hero" />
+      <div className="skeleton skeleton-text" />
+      <div className="skeleton skeleton-text" />
+      <div className="skeleton skeleton-text short" />
+    </div>
+  </div>
+);
 
   const ArticleCard = ({ article, showDate = false }) => (
     <div className="article-card" onClick={() => handleCardClick(article)}>
