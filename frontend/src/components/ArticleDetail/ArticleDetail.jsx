@@ -163,7 +163,7 @@ const ArticleDetail = () => {
           ) : (
             <div className="rss-summary-container">
               <blockquote className="ai-summary">
-                <span className="summary-label">AI SUMMARY</span>
+                <span className="summary-label">EDITORIAL BRIEF</span>
                 <p>{article.summary || '내용 요약 중입니다...'}</p>
               </blockquote>
               <div className="full-text">
