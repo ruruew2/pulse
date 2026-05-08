@@ -13,26 +13,22 @@ const ArticleDetail = () => {
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [loading, setLoading] = useState(!state?.data);
-
   const [scrollProgress, setScrollProgress] = useState(0);
 
+  // ✅ 1. 스크롤 로직 (useEffect 밖으로 독립시켰어요)
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setScrollProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // ✅ 2. 데이터 초기화 로직
   useEffect(() => {
     window.scrollTo(0, 0);
-
-
-
-    useEffect(() => {
-      const handleScroll = () => {
-        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (window.scrollY / totalHeight) * 100;
-        setScrollProgress(progress);
-      };
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-
-
     const initPage = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       const currentUser = session?.user ?? null;
@@ -41,13 +37,11 @@ const ArticleDetail = () => {
       if (!article && id) {
         await fetchAnyArticle(id);
       } else if (article && id) {
-        // 이미 데이터가 있는 경우 (state 전달)
         const tableName = article.content ? 'newsletters' : 'articles';
         incrementView(id, tableName);
         if (currentUser) checkUserStatus(currentUser.id, id);
       }
     };
-
     initPage();
   }, [id]);
 
