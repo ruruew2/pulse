@@ -680,3 +680,23 @@ html, body {
 .pc-text {
     display: none;
   }
+
+
+.today-brief-section {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 40px;
+}
+
+.brief-card {
+  background: #f8f9fa; /* 연한 그레이 */
+  padding: 40px;
+  border-left: 5px solid #000; /* 포인트 선 */
+  border-radius: 4px;
+}
+
+.brief-card h2 {
+  font-family: 'Pretendard';
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}

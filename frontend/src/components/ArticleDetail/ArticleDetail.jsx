@@ -14,8 +14,12 @@ const ArticleDetail = () => {
   const [bookmarked, setBookmarked] = useState(false);
   const [loading, setLoading] = useState(!state?.data);
 
+
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    
 
     const initPage = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -34,6 +38,20 @@ const ArticleDetail = () => {
 
     initPage();
   }, [id]);
+
+  // [기존 코드 아래에 추가] 스크롤 프로그레스 로직
+useEffect(() => {
+  const updateScroll = () => {
+    const currentScrollY = window.scrollY;
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (totalHeight <= 0) return;
+    const progress = (currentScrollY / totalHeight) * 100;
+    setScrollProgress(progress);
+  };
+
+  window.addEventListener("scroll", updateScroll);
+  return () => window.removeEventListener("scroll", updateScroll);
+}, []);
 
   const handleBack = () => {
   if (!state) {
@@ -140,14 +158,27 @@ const ArticleDetail = () => {
   const displayDate = (article.created_at || article.publishedAt || article.published_at || '').split(/[ T]/)[0];
 
 return (
-  <div className="detail-container">
-    {/* 헤더 네비게이션 영역 */}
-    <nav className="detail-nav">
-      <div className="nav-logo" onClick={() => navigate('/')}>
-        PULSE
-      </div>
-      <div className="nav-spacer"></div> {/* 오른쪽 균형을 맞추기 위한 빈 박스 */}
-    </nav>
+    <div className="detail-container">
+      {/* 1. 프로그레스 바: 네비게이션 바로 아래 고정 */}
+      <div style={{
+        position: 'fixed',
+        top: '64px', 
+        left: 0,
+        width: `${scrollProgress}%`,
+        height: '3px',
+        background: '#000',
+        zIndex: 1001,
+        transition: 'width 0.1s ease-out'
+      }} />
+
+      {/* 2. 네비게이션 영역 */}
+      <nav className="detail-nav">
+        <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
+        <div className="nav-logo" onClick={() => navigate('/')}>
+          PULSE
+        </div>
+        <div className="nav-spacer"></div> 
+      </nav>
 
       <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
       <header className="detail-header">

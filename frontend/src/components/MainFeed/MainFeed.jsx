@@ -17,6 +17,13 @@ const MainFeed = () => {
   const designArticles = savedCats.includes('DESIGN') ? articles.filter(a => a.category === 'DESIGN') : [];
   const trendArticles = savedCats.includes('TREND') ? articles.filter(a => a.category === 'TREND') : [];
 
+
+// 최신 브리핑 기사 추출 (가장 최신 기사 1개)
+  const latestBrief = useMemo(() => {
+  return articles.length > 0 ? articles[0] : null;
+}, [articles]);
+
+
 const fetchAllData = async () => {
   setLoading(true);
   try {
@@ -161,6 +168,27 @@ return (
           <p className="hero-desc">가장 앞서가는 IT, 디자인, 트렌드 소식을<br />매주 월요일 아침, 당신의 메일함으로 전달합니다.</p>
         </motion.div>
       </section>
+
+      {/* ✨ 추가: Today's Brief Section */}
+    {latestBrief && (
+      <section className="today-brief-section" onClick={() => navigate(`/article/${latestBrief.id}`, { state: { data: latestBrief } })}>
+        <div className="section-label">TODAY'S BRIEF</div>
+        <div className="brief-card">
+          <div className="brief-header">
+            <span className="brief-tag">HOT TOPIC</span>
+            <span className="brief-date">JUST UPDATED</span>
+          </div>
+          <h2 className="brief-title">{latestBrief.title}</h2>
+          <p className="brief-summary">
+            {latestBrief.summary || "오늘의 핵심 인사이트를 확인해보세요."}
+          </p>
+          <div className="brief-footer">
+            <span>READ INSIGHT →</span>
+            <span className="ai-badge">AI ANALYSIS</span>
+          </div>
+        </div>
+      </section>
+    )}
 
       <section className="category-feature-grid">
         {categories.map((cat) => (
