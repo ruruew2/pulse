@@ -20,13 +20,14 @@ const MainFeed = () => {
 const fetchAllData = async () => {
   setLoading(true);
   try {
-    const [rssResponse, supabaseResult] = await Promise.all([
-      fetch('https://pulse-dhro.onrender.com/articles'),
-      supabase.from('newsletters').select('*').order('created_at', { ascending: false })
-    ]);
-
+    const rssResponse = await fetch('https://pulse-dhro.onrender.com/articles');
     const rssData = await rssResponse.json();
-    const { data: supabaseData, error } = supabaseResult;
+
+    const { data: supabaseData, error } = await supabase
+      .from('newsletters')
+      .select('*')
+      .eq('status', 'sent')
+      .order('created_at', { ascending: false });
 
     if (error) throw error;
 

@@ -8,13 +8,19 @@ const History = () => {
   const [history, setHistory] = useState([]); // 처음엔 빈 배열
   const navigate = useNavigate();
 
-  const fetchHistory = async () => {
-    const { data } = await supabase
-      .from('newsletters')
-      .select('*')
-      .order('created_at', { ascending: false });
-    setHistory(data || []); // 데이터가 없으면 빈 배열로 강제 설정
-  };
+const fetchHistory = async () => {
+  const { data } = await supabase
+    .from('newsletters')
+    .select('*')
+    .order('created_at', { ascending: false }); // .eq('status', 'sent') 지움
+  setHistory(data || []);
+};
+
+  const handlePublish = async (e, id) => {
+  e.preventDefault();
+  await supabase.from('newsletters').update({ status: 'sent' }).eq('id', id);
+  fetchHistory();
+};
 
   useEffect(() => {
     fetchHistory();
@@ -101,10 +107,13 @@ const History = () => {
                 </span>
               </div>
             </Link>
-            <div className="history-card-actions">
-              <button className="edit-btn" onClick={(e) => handleEdit(e, item)}>수정</button>
-              <button className="delete-btn" onClick={(e) => handleDelete(e, item.id)}>삭제</button>
-            </div>
+<div className="history-card-actions">
+  <button className="edit-btn" onClick={(e) => handleEdit(e, item)}>수정</button>
+  {item.status === 'draft' && (
+    <button className="publish-now-btn" onClick={(e) => handlePublish(e, item.id)}>발행</button>
+  )}
+  <button className="delete-btn" onClick={(e) => handleDelete(e, item.id)}>삭제</button>
+</div>
           </div>
         ))}
       </div>

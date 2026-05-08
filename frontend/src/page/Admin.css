@@ -96,7 +96,6 @@
 
 /* 발행 버튼 */
 .publish-btn {
-  width: 100%;
   padding: 20px;
   background: #1a1a1a;
   color: #fff;
@@ -312,4 +311,31 @@
   .ql-container.ql-snow {
     min-height: 300px;
   }
+}
+
+
+.publish-btns {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.draft-btn {
+  flex: 1;
+  padding: 20px;
+  background: transparent;
+  color: #1a1a1a;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.draft-btn:hover:not(:disabled) {
+  border-color: #1a1a1a;
+}
+
+.publish-btn {
+  flex: 2;
 }

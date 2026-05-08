@@ -18,6 +18,7 @@ const Admin = () => {
 
   // 수정 모드인지 판별 (데이터가 있으면 true)
   const isEditMode = !!state?.editData;
+  
 
   // 수정 모드일 때 데이터 채워넣기
   useEffect(() => {
@@ -70,8 +71,8 @@ const Admin = () => {
     },
   }), []);
 
-  // 👈 2. 함수 이름을 handleSave로 통일! (handlePublish 대신)
-  const handleSave = async () => {
+
+  const handleSave = async (status = 'sent') => {
     if (!title || !content) {
       setMsg('제목과 내용을 입력해주세요.');
       return;
@@ -89,17 +90,16 @@ const Admin = () => {
         if (error) throw error;
         setMsg('수정 완료! 히스토리로 이동합니다.');
         setTimeout(() => navigate('/history'), 1500);
-      } else {
-        // [신규 모드] 새 기사 추가 (Insert)
+        } else {
         const { error } = await supabase
           .from('newsletters')
           .insert({ 
             title, 
             content, 
             category, 
-            status: 'sent', // 👈 '발송 완료' 상태 주입
+            status, // 파라미터로 받은 status 사용
             created_at: new Date().toISOString() 
-          });
+    });
 
         if (error) throw error;
         setMsg('발행 완료! 메인 피드에 추가되었습니다.');
@@ -136,10 +136,15 @@ const Admin = () => {
           </div>
         )}
 
-        {/* 👈 3. onClick에 handleSave를 연결! */}
-        <button className="publish-btn" onClick={handleSave} disabled={loading}>
-          {loading ? '저장 중...' : isEditMode ? '수정 완료하기 ✓' : '발행하기 →'}
-        </button>
+        <div className="publish-btns">
+          <button className="draft-btn" onClick={() => handleSave('draft')} disabled={loading}>
+            임시저장
+          </button>
+          <button className="publish-btn" onClick={() => handleSave('sent')} disabled={loading}>
+            {loading ? '저장 중...' : '발행하기 →'}
+          </button>
+        </div>
+
 
         <button className="history-nav-btn" onClick={() => safeNavigate('/history')}>히스토리 보러가기 →</button>
       </section>

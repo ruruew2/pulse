@@ -104,3 +104,14 @@
   font-weight: 600;
   color: #333;
 }
+
+.publish-now-btn {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-family: 'Pretendard';
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
