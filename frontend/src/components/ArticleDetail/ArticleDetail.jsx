@@ -162,13 +162,21 @@ return (
 <div style={{
   position: 'fixed',
   top: '64px', 
-  left: 0, // 화면 왼쪽 끝에 딱 붙임
-  width: `${scrollProgress}vw`, // ⚠️ % 대신 vw를 써서 화면 전체 너비 기준 계산!
+  left: 0,
+  /* ⚠️ vw 대신 %를 쓰되, 부모의 제약을 받지 않도록 width: 100%를 명시해줍니다 */
+  width: '100%', 
   height: '3px',
-  backgroundColor: '#000',
-  zIndex: 9999, // 네비게이션보다 무조건 위로!
-  transition: 'width 0.1s ease-out'
-}} />
+  backgroundColor: 'transparent', // 배경은 투명하게
+  zIndex: 9999,
+  pointerEvents: 'none' // 클릭 방해 안 되게 추가
+}}>
+  <div style={{
+    width: `${scrollProgress}%`, // 실제 움직이는 선
+    height: '100%',
+    backgroundColor: '#000',
+    transition: 'width 0.1s ease-out'
+  }} />
+</div>
 
       <button className="back-btn" onClick={() => navigate(-1)}>← BACK</button>
       <header className="detail-header">
